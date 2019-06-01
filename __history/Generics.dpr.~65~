@@ -1,0 +1,97 @@
+program Generics;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils,
+  System.Generics.Collections,
+  TGenericContainer in 'TGenericContainer.pas',
+  TEntry in 'TEntry.pas',
+  uUtils in 'uUtils.pas',
+  uAluno in 'uAluno.pas',
+  uProcessador in 'uProcessador.pas';
+
+var
+  genericInt : TGenericContainer<integer>;
+  genericStr : TGenericContainer<string>;
+  entry : TEntry<string, integer>;
+
+  idade : Integer;
+  nota : Integer;
+  media : Integer;
+  situacao : String;
+
+  alunoTI : IAluno;
+  alunoLetras : IAluno;
+
+  lista : TList<Integer>;
+  json : TList<TEntry<string, string>>;
+  dic : TDictionary<Integer, IAluno>;
+
+  i : Integer;
+begin
+  try
+    genericInt := TGenericContainer<integer>.Create;
+    genericInt.Value := 2009; //only integers
+    WriteLn(genericInt.Value);
+
+    genericStr := TGenericContainer<string>.Create;
+    genericStr.Value := 'Delphi Generics'; //only strings
+    WriteLn(genericStr.Value);
+
+    entry := TEntry<string, integer>.Create;
+    entry.SetKeyValue('ano', 2018);
+    WriteLn(entry.Key);
+    WriteLn(entry.Value);
+
+    idade := 35;
+    nota := 5;
+    media := 7;
+    situacao := TUtils.IIF<String>((nota >= media), 'Aprovado', 'Reprovado');
+    WriteLn(situacao);
+
+    situacao := TUtils.IIF<String>(idade > 18, 'Pode dirigir', 'Nao pode dirigir');
+    WriteLn(situacao);
+
+    alunoTI := TAlunoExatas.Create(6);
+    situacao := alunoTI.Processar();
+    WriteLn(situacao);
+
+    alunoLetras := TAlunoHumanas.Create(6);
+    situacao := alunoLetras.Processar();
+    WriteLn(situacao);
+
+    lista := TList<Integer>.Create;
+    lista.Add(1);
+    lista.Add(2);
+    lista.Add(3);
+    lista.Add(4);
+    lista.Remove(1);
+
+    For i := 0 to lista.Count-1 Do
+    Begin
+      Writeln(lista[i]);
+    End;
+
+    json := TList<TEntry<string, string>>.Create;
+    json.Add(TEntry<string, string>.Create('nome', 'Fernando Fiaux de Moraes'));
+    json.Add(TEntry<string, string>.Create('idade', '35'));
+    json.Add(TEntry<string, string>.Create('cpf', '10455143730'));
+    json.Add(TEntry<string, string>.Create('estado civil', 'Casado'));
+
+    For i := 0 to json.Count-1 Do
+    Begin
+      Writeln(json[i].Key + ': ' + json[i].Value);
+    End;
+
+    dic := TDictionary<String, String>.Create;
+
+
+    ReadLn;
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
+end.

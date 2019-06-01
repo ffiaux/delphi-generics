@@ -1,0 +1,52 @@
+unit uProcessar;
+
+interface
+
+type
+  IChecker<T> = interface
+    function Check(const Instance: T): Boolean;
+  end;
+
+type
+  TCustomChecker<T> = class(TInterfacedObject, IChecker<T>)
+  protected
+    FCheckValue: T;
+    function Check(const Instance: T): Boolean; virtual; abstract;
+  public
+    constructor Create(ACheckValue: T);
+  end;
+
+  TIntChecker = class(TCustomChecker<Integer>)
+  protected
+    function Check(const Instance: Integer): Boolean; override;
+  end;
+
+  TStrChecker = class(TCustomChecker<string>)
+  protected
+    function Check(const Instance: string): Boolean; override;
+  end;
+
+implementation
+
+{ TCustomChecker<T> }
+
+constructor TCustomChecker<T>.Create(ACheckValue: T);
+begin
+  FCheckValue:= ACheckValue;
+end;
+
+{ TIntChecker }
+
+function TIntChecker.Check(const Instance: Integer): Boolean;
+begin
+  Result:= Instance = FCheckValue;
+end;
+
+{ TStrChecker }
+
+function TStrChecker.Check(const Instance: string): Boolean;
+begin
+  Result:= Length(Instance) = Length(FCheckValue);
+end;
+
+end.

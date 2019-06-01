@@ -1,0 +1,52 @@
+unit uProcessar;
+
+interface
+
+type
+  IProcessar<T> = interface
+    function Processar(const Instance: T): Boolean;
+  end;
+
+type
+  TProcessarCustomizado<T> = class(TInterfacedObject, IProcessar<T>)
+  protected
+    FValue: T;
+    function Check(const Instance: T): Boolean; virtual; abstract;
+  public
+    constructor Create(Value: T);
+  end;
+
+  TProcessarInt = class(TProcessarCustomizado<Integer>)
+  protected
+    function Processar(const Instance: Integer): Boolean; override;
+  end;
+
+  TProcessarStr = class(TProcessarCustomizado<string>)
+  protected
+    function Processar(const Instance: string): Boolean; override;
+  end;
+
+implementation
+
+{ TCustomChecker<T> }
+
+constructor TProcessarCustomizado<T>.Create(Value: T);
+begin
+  FValue:= Value;
+end;
+
+{ TIntChecker }
+
+function TProcessarInt.Processar(const Instance: Integer): Boolean;
+begin
+  Result:= Instance = FValue;
+end;
+
+{ TStrChecker }
+
+function TProcessarStr.Processar(const Instance: string): Boolean;
+begin
+  Result:= Length(Instance) = Length(FValue);
+end;
+
+end.

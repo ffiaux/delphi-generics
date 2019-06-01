@@ -1,0 +1,43 @@
+unit uProcessador;
+
+interface
+
+uses Math;
+
+type
+  IProcessadorAluno<Double> = interface
+      ['{DB85DD05-BC0A-4524-A500-64FAD920734E}']
+      function Processar : String;
+  end;
+
+  TProcessarAlunoExatas<Double> = class(TInterfacedObject, IProcessadorAluno<Double>)
+    Nota : Integer;
+    function Processar : String;
+  end;
+
+  TProcessarAlunoHumanas<Double> = class(TInterfacedObject, IProcessadorAluno<Double>)
+    Nota : Integer;
+    function Processar : String;
+  end;
+
+implementation
+
+
+{ TProcessarAlunoExatas<Double> }
+
+function TProcessarAlunoExatas<Double>.Processar: String;
+begin
+
+  if (Nota > 6) then Result := 'Aprovado' else Result := 'Reprovado';
+end;
+
+{ TProcessarAlunoHumanas<Double> }
+
+function TProcessarAlunoHumanas<Double>.Processar: String;
+begin
+  if (Nota >= 5) then
+    Result := 'Aprovado'
+  else Result := 'Reprovado';
+end;
+
+end.

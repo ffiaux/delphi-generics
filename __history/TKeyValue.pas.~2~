@@ -1,0 +1,12 @@
+unit TKeyValue;
+
+interface
+
+type
+  TEntry<T, > = class
+    Value : T;
+  end;
+
+implementation
+
+end.

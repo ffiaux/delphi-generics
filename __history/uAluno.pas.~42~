@@ -1,0 +1,23 @@
+unit uAluno;
+
+interface
+
+type
+  IAluno<Double> = interface
+      ['{DB85DD05-BC0A-4524-A500-64FAD920734E}']
+      function Processar : String;
+  end;
+
+  TAlunoExatas<Double> = class(TInterfacedObject, IAluno<Double>)
+    Nota : Double;
+    function Processar : String;
+  end;
+
+  TAlunoHumanas<Double> = class(TInterfacedObject, IAluno<Double>)
+    Nota : Double;
+    function Processar : String;
+  end;
+
+implementation
+
+end.

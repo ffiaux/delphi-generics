@@ -1,0 +1,20 @@
+unit uProcessar;
+
+interface
+  type
+    IProcessar = interface
+        ['{1BFF5026-1B97-4E0F-97AE-F088F1ACD133}']
+        function Processar() : String;
+    end;
+
+    TProcessarInt<Integer> = class(TInterfacedObject, IProcessar)
+        function Processar() : String;
+    end;
+
+    TProcessarStr<String> = class(TInterfacedObject, IProcessar)
+        function Processar() : String;
+    end;
+
+implementation
+
+end.

@@ -1,0 +1,40 @@
+unit uAluno;
+
+interface
+
+uses
+  uUtils;
+
+type
+  IAluno = interface
+      ['{1B2C7BE5-A63E-49C7-87C3-42B50C3F8E9B}']
+      function Processar : String;
+  end;
+
+  TAlunoExatas = class(TInterfacedObject, IAluno)
+    Nota : Double;
+    function Processar : String;
+  end;
+
+  TAlunoHumanas = class(TInterfacedObject, IAluno)
+    Nota : Double;
+    function Processar : String;
+  end;
+
+implementation
+
+{ TAlunoExatas<Double> }
+
+function TAlunoExatas.Processar: String;
+begin
+
+end;
+
+{ TAlunoHumanas<Double> }
+
+function TAlunoHumanas.Processar: String;
+begin
+  Result := TUtils.IIF<String>((nota >= media), 'Aprovado', 'Reprovado');
+end;
+
+end.
